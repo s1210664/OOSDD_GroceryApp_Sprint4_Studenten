@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
 using System.Collections.ObjectModel;
+using Grocery.Core.enums;
 
 namespace Grocery.App.ViewModels
 {
@@ -12,7 +13,7 @@ namespace Grocery.App.ViewModels
         public Client Client { get; set; }
         
         private readonly IGroceryListService _groceryListService;
-        private readonly GlobalViewModel global;
+        private readonly GlobalViewModel? global;
         
         
         
@@ -42,18 +43,17 @@ namespace Grocery.App.ViewModels
             base.OnDisappearing();
             GroceryLists.Clear();
         }
+        
         [RelayCommand]
         private void ShowBoughtProducts()
         {
             if (Client != null)
             {
-                if (Client.Role == Client.Privilege.Admin)
+                if (Client.Role == Privilege.Admin)
                 {
                     Shell.Current.GoToAsync(nameof(Views.BoughtProductsView));
                 }
             }
-            
-            
         }
     }
 }

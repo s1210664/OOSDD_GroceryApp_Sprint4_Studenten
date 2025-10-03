@@ -22,7 +22,7 @@ namespace Grocery.App.ViewModels
 
         partial void OnGroceryListChanged(GroceryList value)
         {
-            GroceryList = _groceryListService.Update(value);
+            GroceryList = _groceryListService.Update(value) ?? throw new InvalidOperationException();
         }
 
         [RelayCommand]
