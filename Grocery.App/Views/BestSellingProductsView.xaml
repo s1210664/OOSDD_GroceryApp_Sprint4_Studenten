@@ -17,19 +17,9 @@
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
             </CollectionView.ItemsLayout>
+            
             <CollectionView.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.5*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <!-- PLaats hier de header velden voor de tabel-->
-                </Grid>
-            </CollectionView.Header>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="m:BestSellingProducts">
+                
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*"/>
@@ -37,7 +27,28 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <!-- PLaats hier de datavelden voor de tabel-->
+                        <Label Grid.Column="0" Text="Naam"/>
+                        <Label Grid.Column="1" Text="Voorraad"/>
+                        <Label Grid.Column="2" Text="Aantal verkocht"/>
+                        <Label Grid.Column="3" Text="Rang" HorizontalOptions="End"/>
+                    </Grid>
+                
+            </CollectionView.Header>
+                
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate x:DataType="m:BestSellingProducts">
+                    <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center"/>
+                    <Label Grid.Column="1" Text="{Binding Stock}" VerticalOptions="Center"/>
+                    <Label Grid.Column="2" Text="{Binding NrOfSells}" VerticalOptions="Center"/>
+                    <Label Grid.Column="3" Text="{Binding Ranking}" VerticalOptions="Center" HorizontalOptions="End"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
