@@ -59,28 +59,26 @@ namespace Grocery.Core.Services
             List<GroceryListItem> groceryListItems = _groceriesRepository.GetAll();
             Dictionary<Product, int> unrankedproducts = new Dictionary<Product, int>();
 
-            foreach (var product in products)
+            foreach (var product in products) // telt de hoeveelheden van producten die hoger dan 0 zijn op en plaatst ze in unrankedproducts
             {
-                int productAmount = 0;
-                foreach (var groceryListItem in groceryListItems)
-                {
-                    if (groceryListItem.ProductId == product.Id)
-                    {
-                        productAmount += groceryListItem.Amount;
-                    }
-
-                }
+                int productAmount = groceryListItems
+                    .Where(groceryListItem => groceryListItem.ProductId == product.Id && groceryListItem.Amount > 0)
+                    .Sum(groceryListItem => groceryListItem.Amount);
 
                 unrankedproducts.Add(product, productAmount);
 
             }
             
-            var rankedproducts = unrankedproducts.OrderByDescending(kvp => kvp.Value).ToList();
+            var rankedproducts = unrankedproducts.OrderByDescending(kvp => kvp.Value).ToList(); // sorteer de keyvaluepairs op hoeveelheid en plaatst deze in een lijst
             for (int i = 0;i < topX && i < rankedproducts.Count; i++)
             {
                 Product rankedproduct = rankedproducts[i].Key;
                 int rankedproductamount = rankedproducts[i].Value;
-                bestsellingproducts.Add(new BestSellingProducts(rankedproduct.Id, rankedproduct.Name, rankedproduct.Stock, rankedproductamount, i+1));
+                if (rankedproductamount > 0)
+                {
+                    bestsellingproducts.Add(new BestSellingProducts(rankedproduct.Id, rankedproduct.Name, rankedproduct.Stock, rankedproductamount, i+1));
+                }
+                
             }
             
             return bestsellingproducts;

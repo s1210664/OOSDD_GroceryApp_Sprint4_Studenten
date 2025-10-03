@@ -1,13 +1,9 @@
-﻿
+﻿using Grocery.Core.enums;
 namespace Grocery.Core.Models
 {
     public partial class Client : Model
     {
-        public enum Privilege
-        {
-            None,
-            Admin
-        }
+        
         public Privilege Role { get; set; }
         public string EmailAddress { get; set; }
         public string Password { get; set; }

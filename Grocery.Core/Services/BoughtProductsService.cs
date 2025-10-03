@@ -18,25 +18,17 @@ namespace Grocery.Core.Services
             _clientRepository=clientRepository;
             _productRepository=productRepository;
         }
-        public List<BoughtProducts> Get(int? productId)
+        public List<BoughtProducts> Get(int? productId) // haalt de client, product en boodschappenlijst van iedereen die een bepaald product in hun boodschappenlijst heeft.
         {
             if (productId == null) return new List<BoughtProducts>();
             List<GroceryList> groceryLists = _groceryListRepository.GetAll();
-            List<BoughtProducts> boughtProducts = new List<BoughtProducts>();
             
-            foreach (GroceryList groceryList in groceryLists)
-            {
-                
-                
-                List<GroceryListItem> groceryListItems = _groceryListItemsRepository.GetAllOnGroceryListId(groceryList.Id);
-                if (!groceryListItems.Any(g => g.ProductId == productId)) continue;
-                Client client = _clientRepository.Get(groceryList.ClientId);
-                Product product = _productRepository.Get(groceryList.Id);
-                
-                boughtProducts.Add(new BoughtProducts(client, groceryList, product));
-            }
-                
-            return boughtProducts;
+            return (from groceryList in groceryLists let groceryListItems = _groceryListItemsRepository
+                .GetAllOnGroceryListId(groceryList.Id) where groceryListItems
+                .Any(g => g.ProductId == productId) let client = _clientRepository
+                .Get(groceryList.ClientId) let product = _productRepository
+                .Get(groceryList.Id) select new BoughtProducts(client, groceryList, product))
+                .ToList();
         }
     }
 }
