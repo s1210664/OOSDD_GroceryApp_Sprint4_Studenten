@@ -18,11 +18,11 @@ namespace Grocery.Core.Services
             _clientRepository=clientRepository;
             _productRepository=productRepository;
         }
-        public List<BoughtProducts> Get(int? productId)
+        public List<BoughtProducts> Get(int? productId) // haalt de client, product en boodschappenlijst van iedereen die een bepaald product in hun boodschappenlijst heeft.
         {
             if (productId == null) return new List<BoughtProducts>();
             List<GroceryList> groceryLists = _groceryListRepository.GetAll();
-
+            
             return (from groceryList in groceryLists let groceryListItems = _groceryListItemsRepository
                 .GetAllOnGroceryListId(groceryList.Id) where groceryListItems
                 .Any(g => g.ProductId == productId) let client = _clientRepository

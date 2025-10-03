@@ -74,7 +74,11 @@ namespace Grocery.Core.Services
             {
                 Product rankedproduct = rankedproducts[i].Key;
                 int rankedproductamount = rankedproducts[i].Value;
-                bestsellingproducts.Add(new BestSellingProducts(rankedproduct.Id, rankedproduct.Name, rankedproduct.Stock, rankedproductamount, i+1));
+                if (rankedproductamount > 0)
+                {
+                    bestsellingproducts.Add(new BestSellingProducts(rankedproduct.Id, rankedproduct.Name, rankedproduct.Stock, rankedproductamount, i+1));
+                }
+                
             }
             
             return bestsellingproducts;
