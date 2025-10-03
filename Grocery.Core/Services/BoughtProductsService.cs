@@ -28,8 +28,8 @@ namespace Grocery.Core.Services
             {
                 
                 
-                List<GroceryListItem> groceryListItem = _groceryListItemsRepository.GetAllOnGroceryListId(groceryList.Id);
-                if (!groceryListItem.Any(g => g.ProductId == productId)) continue;
+                List<GroceryListItem> groceryListItems = _groceryListItemsRepository.GetAllOnGroceryListId(groceryList.Id);
+                if (!groceryListItems.Any(g => g.ProductId == productId)) continue;
                 Client client = _clientRepository.Get(groceryList.ClientId);
                 Product product = _productRepository.Get(groceryList.Id);
                 
